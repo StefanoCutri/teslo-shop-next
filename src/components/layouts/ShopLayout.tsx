@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Navbar from "../ui/Navbar";
+import SideMenu from "../ui/SideMenu";
 
 interface Props {
   title: string;
@@ -30,8 +31,8 @@ const ShopLayout = ({
         <Navbar />
       </nav>
 
-      {/* TODO: sidebar */}
-      
+      <SideMenu />
+
       <main
         style={{
           margin: "80px auto",
