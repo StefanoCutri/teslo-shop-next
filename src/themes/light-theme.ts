@@ -15,7 +15,7 @@ export const lightTheme = createTheme({
   components: {
     MuiLink: {
       defaultProps: {
-        underline: 'none',
+        underline: 'none'
       },
     },
     MuiAppBar: {
@@ -26,6 +26,7 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: 'white',
+          color: '#000',
           height: 60
         },
       }
@@ -40,6 +41,10 @@ export const lightTheme = createTheme({
         h2: {
           fontSize: 20,
           fontWeight: 400
+        },
+        h6: {
+          fontSize: 20,
+          fontWeight: 600
         },
         subtitle1: {
           fontSize: 18,
@@ -57,6 +62,8 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
+          backgroundColor: 'white',
+          color: 'black',
           textTransform: 'none',
           boxShadow: 'none',
           borderRadius: 10,

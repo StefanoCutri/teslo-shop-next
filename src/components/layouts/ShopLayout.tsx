@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Navbar from "../ui/Navbar";
 
 interface Props {
   title: string;
@@ -24,8 +25,13 @@ const ShopLayout = ({
 
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
-      <nav>{/* TODO: navbar */}</nav>
+
+      <nav>
+        <Navbar />
+      </nav>
+
       {/* TODO: sidebar */}
+      
       <main
         style={{
           margin: "80px auto",
