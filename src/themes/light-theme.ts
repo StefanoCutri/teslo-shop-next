@@ -15,7 +15,8 @@ export const lightTheme = createTheme({
   components: {
     MuiLink: {
       defaultProps: {
-        underline: 'none'
+        underline: 'none',
+        color: '#000'
       },
     },
     MuiAppBar: {
@@ -26,7 +27,6 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: 'white',
-          color: '#000',
           height: 60
         },
       }
