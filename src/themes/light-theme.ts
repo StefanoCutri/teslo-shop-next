@@ -10,6 +10,9 @@ export const lightTheme = createTheme({
     },
     secondary: {
       main: '#3A64D8'
+    },
+    info: {
+      main: '#fff'
     }
   },
   components: {
@@ -49,6 +52,10 @@ export const lightTheme = createTheme({
         subtitle1: {
           fontSize: 18,
           fontWeight: 600
+        },
+        subtitle2: {
+          fontSize: 15,
+          fontWeight: 600
         }
       }
     },
@@ -59,11 +66,10 @@ export const lightTheme = createTheme({
         variant: 'contained',
         size: 'small',
         disableElevation: true,
+        color: 'info'
       },
       styleOverrides: {
         root: {
-          backgroundColor: 'white',
-          color: 'black',
           textTransform: 'none',
           boxShadow: 'none',
           borderRadius: 10,

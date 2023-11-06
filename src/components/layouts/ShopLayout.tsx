@@ -6,7 +6,7 @@ interface Props {
   title: string;
   pageDescription: string;
   imageFullUrl?: string;
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
 }
 
 const ShopLayout = ({
