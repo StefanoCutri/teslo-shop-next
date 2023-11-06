@@ -35,7 +35,7 @@ const Navbar = () => {
           </NextLink>
           <NextLink href="/category/children" passHref legacyBehavior>
             <Link>
-              <Button>Children</Button>
+              <Button>Kids</Button>
             </Link>
           </NextLink>
         </Box>
