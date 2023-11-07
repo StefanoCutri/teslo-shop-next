@@ -3,6 +3,7 @@ import { initialData } from "../../../database/products";
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import ProductSlideShow from "@/components/products/ProductSlideShow";
 import ItemCounter from "@/components/ui/ItemCounter";
+import ProductSizeSelector from "@/components/products/ProductSizeSelector";
 
 const product = initialData.products[0];
 
@@ -27,6 +28,7 @@ const ProductPage = () => {
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Amount</Typography>
               <ItemCounter/>
+              <ProductSizeSelector selectedSize={product.sizes[0]} sizes={product.sizes} />
             </Box>
 
             {/* Add to box */}
