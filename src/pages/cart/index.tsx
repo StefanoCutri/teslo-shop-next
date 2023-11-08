@@ -1,3 +1,4 @@
+import CartList from "@/components/cart/CartList";
 import ShopLayout from "@/components/layouts/ShopLayout";
 import {
   Box,
@@ -19,7 +20,7 @@ const CartPage = () => {
 
       <Grid container>
         <Grid item xs={12} sm={7}>
-          {/* CartList */}
+          <CartList/>
         </Grid>
         <Grid item xs={12} sm={5}>
           <Card className="summary-card">
