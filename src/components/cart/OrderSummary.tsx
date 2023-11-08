@@ -7,7 +7,7 @@ const OrderSummary = () => {
         <Typography>No. Products</Typography>
       </Grid>
       <Grid item xs={6} display="flex" justifyContent="end">
-        <Typography>3</Typography>
+        <Typography>3 products</Typography>
       </Grid>
 
       <Grid item xs={6}>
