@@ -2,10 +2,15 @@ import CartList from "@/components/cart/CartList";
 import OrderSummary from "@/components/cart/OrderSummary";
 import ShopLayout from "@/components/layouts/ShopLayout";
 import {
+  CreditCardOffOutlined,
+  CreditScoreOutlined,
+} from "@mui/icons-material";
+import {
   Box,
   Button,
   Card,
   CardContent,
+  Chip,
   Divider,
   Grid,
   Link,
@@ -14,13 +19,28 @@ import {
 import NextLink from "next/link";
 import React from "react";
 
-const SummaryPage = () => {
+const OrderPage = () => {
   return (
     <ShopLayout title="Order Summary" pageDescription="Order summary">
       <Typography variant="h1" component="h1">
-        {" "}
-        Order summary
+        Order: A1B2
       </Typography>
+
+      {/* <Chip
+        sx={{ my: 2, px: 2 }}
+        label="Pending payment"
+        variant="outlined"
+        color="error"
+        icon={<CreditCardOffOutlined />}
+      /> */}
+
+      <Chip
+        sx={{ my: 2, px: 2 }}
+        label="Paid"
+        variant="outlined"
+        color="success"
+        icon={<CreditScoreOutlined />}
+      />
 
       <Grid container>
         <Grid item xs={12} sm={7}>
@@ -57,9 +77,16 @@ const SummaryPage = () => {
               <OrderSummary />
 
               <Box sx={{ mt: 3 }}>
-                <Button color="secondary" className="circular-btn" fullWidth>
-                  Confirm order
-                </Button>
+                {/* TODO */}
+                <h1>Pay</h1>
+
+                <Chip
+                  sx={{ my: 2, px: 2 }}
+                  label="Paid"
+                  variant="outlined"
+                  color="success"
+                  icon={<CreditScoreOutlined />}
+                />
               </Box>
             </CardContent>
           </Card>
@@ -69,4 +96,4 @@ const SummaryPage = () => {
   );
 };
 
-export default SummaryPage;
+export default OrderPage;
