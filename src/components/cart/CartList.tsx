@@ -17,7 +17,11 @@ const productsInCart = [
   initialData.products[2],
 ];
 
-const CartList = () => {
+interface Props {
+  editable?: boolean;
+}
+
+const CartList = ({ editable = false }: Props) => {
   return (
     <>
       {productsInCart.map((product) => (
@@ -43,7 +47,11 @@ const CartList = () => {
               </Typography>
 
               {/* Conditionally */}
-              <ItemCounter />
+              {editable ? (
+                <ItemCounter />
+              ) : (
+                <Typography variant="body1">3</Typography>
+              )}
             </Box>
           </Grid>
           <Grid
@@ -54,10 +62,12 @@ const CartList = () => {
             flexDirection="column"
           >
             <Typography variant="subtitle1">{`$${product.price}`}</Typography>
-            {/* Editable */}
-            <Button variant="text" color="secondary">
-              Remove
-            </Button>
+
+            {editable && (
+              <Button variant="text" color="secondary">
+                Remove
+              </Button>
+            )}
           </Grid>
         </Grid>
         // <Typography key={product.slug}>{product.title}</Typography>
