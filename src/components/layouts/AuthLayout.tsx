@@ -6,7 +6,7 @@ interface Props {
   children?: JSX.Element | JSX.Element[];
 }
 
-const AuthLayout = ({ title, children }: Props) => {
+export const AuthLayout = ({ title, children }: Props) => {
   return (
     <>
       <Head>
@@ -26,4 +26,3 @@ const AuthLayout = ({ title, children }: Props) => {
   );
 };
 
-export default AuthLayout;
