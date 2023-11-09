@@ -8,7 +8,7 @@ type Data =
   | {
       message: string;
     }
-  | IProduct;
+  | IProduct[];
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "GET":
-      return getProductsBySlug(req, res);
+      return searchProducts(req, res);
     default:
       res.status(400).json({ message: "Bad request" });
   }
@@ -24,16 +24,27 @@ export default async function handler(
   res.status(200).json({ message: "Proccess completed successfully" });
 }
 
-const getProductsBySlug = async ( req: NextApiRequest,res: NextApiResponse<Data>) => {
-  const { slug } = req.query;
+const searchProducts = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {
+  let { q = "" } = req.query;
 
-  await db.connect();
-  const product = await Product.findOne({ slug }).lean();
-  await db.disconnect();
-
-  if (!product) {
-    return res.status(404).json({message: "Product couldn't be found"})
+  if (q.length === 0) {
+    return res.status(404).json({ message: "Should specify search query" });
   }
 
-  return res.status(200).json(product);
+  q = q.toString().toLocaleLowerCase();
+
+  await db.connect();
+
+  const products = await Product.find({
+    $text: { $search: q },
+  })
+  .select("title images price inStock slug -_id ")
+  .lean();
+
+  await db.disconnect();
+
+  return res.status(200).json(products);
 };
