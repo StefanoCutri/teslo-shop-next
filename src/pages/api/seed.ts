@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../database";
+import { db } from "../../database";
 import { Product } from "@/models";
-import { initialData } from "../../../database/products";
+import { initialData } from "../../database/products";
 
 type Data = {
   message: string;
