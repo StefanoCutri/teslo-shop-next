@@ -1,13 +1,13 @@
-import ShopLayout from "@/components/layouts/ShopLayout";
-import { initialData } from "../../database/products";
+import { GetStaticProps, GetStaticPaths } from "next";
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
+
+import ShopLayout from "@/components/layouts/ShopLayout";
 import ProductSlideShow from "@/components/products/ProductSlideShow";
 import ItemCounter from "@/components/ui/ItemCounter";
 import ProductSizeSelector from "@/components/products/ProductSizeSelector";
 
-import { GetServerSideProps } from "next";
 import { IProduct } from "@/interfaces";
-import { getProductBySlug } from "@/database";
+import { getAllProductsSlug, getProductBySlug } from "@/database";
 
 interface Props {
   product: IProduct;
@@ -58,7 +58,17 @@ const ProductPage = ({ product }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async (ctx) => {
+  const slugs = await getAllProductsSlug();
+  return {
+    paths: slugs.map(({ slug }) => ({
+      params: { slug },
+    })),
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params as { slug: string };
 
   const product = await getProductBySlug(slug);
@@ -71,11 +81,34 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     };
   }
-
   return {
     props: {
       product,
     },
+    revalidate: 60 * 60 * 24,
   };
 };
+
 export default ProductPage;
+
+// Not this way
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   const { slug } = params as { slug: string };
+
+//   const product = await getProductBySlug(slug);
+
+//   if (!product) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: {
+//       product,
+//     },
+//   };
+// };
