@@ -5,15 +5,21 @@ import ProductSlideShow from "@/components/products/ProductSlideShow";
 import ItemCounter from "@/components/ui/ItemCounter";
 import ProductSizeSelector from "@/components/products/ProductSizeSelector";
 
-const product = initialData.products[0];
+import { GetServerSideProps } from "next";
+import { IProduct } from "@/interfaces";
+import { getProductBySlug } from "@/database";
 
-const ProductPage = () => {
+interface Props {
+  product: IProduct;
+}
+
+const ProductPage = ({ product }: Props) => {
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={7}>
           {/* Sideshow */}
-          <ProductSlideShow images={product.images}/>
+          <ProductSlideShow images={product.images} />
         </Grid>
         <Grid item xs={12} sm={5}>
           <Box display="flex" flexDirection="column">
@@ -27,8 +33,11 @@ const ProductPage = () => {
             {/* Amount */}
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Amount</Typography>
-              <ItemCounter/>
-              <ProductSizeSelector selectedSize={product.sizes[0]} sizes={product.sizes} />
+              <ItemCounter />
+              <ProductSizeSelector
+                selectedSize={product.sizes[0]}
+                sizes={product.sizes}
+              />
             </Box>
 
             {/* Add to box */}
@@ -49,4 +58,24 @@ const ProductPage = () => {
   );
 };
 
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { slug } = params as { slug: string };
+
+  const product = await getProductBySlug(slug);
+
+  if (!product) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      product,
+    },
+  };
+};
 export default ProductPage;
