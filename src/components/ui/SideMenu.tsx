@@ -33,7 +33,7 @@ const SideMenu = () => {
 
   const handleSearch = () => {
     if (searchTerm.trim().length === 0) return;
-    navigateTo(`/search/${searchTerm}`);
+    navigateTo(`/search/${searchTerm.toLowerCase()}`);
   };
 
   const { push } = useRouter();

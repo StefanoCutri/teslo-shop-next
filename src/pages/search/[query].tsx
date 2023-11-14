@@ -19,7 +19,7 @@ export default function Search({ products, foundProducts, query }: Props) {
       pageDescription={"Find teslo best products"}
     >
       {foundProducts ? (
-        <Typography variant="h2" sx={{ mb: 1 }}>
+        <Typography variant="h2" sx={{ mb: 1 }} textTransform="capitalize">
           {query}
         </Typography>
       ) : (
@@ -27,10 +27,14 @@ export default function Search({ products, foundProducts, query }: Props) {
           <Typography variant="h2" sx={{ mb: 1 }}>
             Couldn't find products
           </Typography>
-          <Typography variant="h2" color="secondary" sx={{ ml: 1 }}>
+          <Typography
+            variant="h2"
+            color="secondary"
+            sx={{ ml: 1 }}
+            textTransform="capitalize"
+          >
             {query}
           </Typography>
-          
         </Box>
       )}
 
@@ -40,7 +44,9 @@ export default function Search({ products, foundProducts, query }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { query = "" } = params as { query: string };
+  let { query = "" } = params as { query: string };
+
+  query = query.toString();
 
   let products = await getProductsBySearchTerm(query);
   const foundProducts = products.length > 0;
@@ -56,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   if (!foundProducts) {
     // all prodcyuts
-    products = await getAllProducts()
+    products = await getAllProducts();
   }
 
   return {
