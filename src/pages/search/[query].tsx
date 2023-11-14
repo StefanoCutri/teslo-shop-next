@@ -1,27 +1,69 @@
-import { Typography } from "@mui/material";
+import { GetServerSideProps } from "next";
+import { Box, Typography } from "@mui/material";
 
 import ShopLayout from "@/components/layouts/ShopLayout";
 import ProductList from "@/components/products/ProductList";
-import { useProducts } from "@/hooks";
-import FullScreenLoading from "@/components/ui/FullScreenLoading";
+import { getAllProducts, getProductsBySearchTerm } from "@/database";
+import { IProduct } from "@/interfaces";
 
-export default function Home() {
-  const { products, isLoading } = useProducts("/products");
+interface Props {
+  products: IProduct[];
+  foundProducts: boolean;
+  query: string;
+}
 
+export default function Search({ products, foundProducts, query }: Props) {
   return (
     <ShopLayout
       title={"Teslo-Shop - Search"}
       pageDescription={"Find teslo best products"}
-      imageFullUrl=""
     >
-      <Typography variant="h1" component="h1">
-        Search products
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        ABC --- 123
-      </Typography>
-      
-      {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
+      {foundProducts ? (
+        <Typography variant="h2" sx={{ mb: 1 }}>
+          {query}
+        </Typography>
+      ) : (
+        <Box display="flex">
+          <Typography variant="h2" sx={{ mb: 1 }}>
+            Couldn't find products
+          </Typography>
+          <Typography variant="h2" color="secondary" sx={{ ml: 1 }}>
+            {query}
+          </Typography>
+          
+        </Box>
+      )}
+
+      <ProductList products={products} />
     </ShopLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { query = "" } = params as { query: string };
+
+  let products = await getProductsBySearchTerm(query);
+  const foundProducts = products.length > 0;
+
+  if (query.length === 0) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: true,
+      },
+    };
+  }
+
+  if (!foundProducts) {
+    // all prodcyuts
+    products = await getAllProducts()
+  }
+
+  return {
+    props: {
+      products,
+      foundProducts,
+      query,
+    },
+  };
+};
