@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -10,16 +10,29 @@ import {
   Button,
   IconButton,
   Badge,
+  Input,
+  InputAdornment,
 } from "@mui/material";
-import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import {
+  ClearOutlined,
+  SearchOutlined,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
 import { UiContext } from "@/context";
 
 const Navbar = () => {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
   const path = pathname.slice(10).toString();
 
-  const { toggleSideMenu } = useContext(UiContext); 
+  const { toggleSideMenu } = useContext(UiContext);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+  const handleSearch = () => {
+    if (searchTerm.trim().length === 0) return;
+    push(`/search/${searchTerm}`);
+  };
   return (
     <AppBar>
       <Toolbar>
@@ -30,7 +43,12 @@ const Navbar = () => {
           </Link>
         </NextLink>
         <Box flex={1} />
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        <Box
+          sx={{
+            display: isSearchVisible ? "none" : { xs: "none", sm: "block" },
+          }}
+          className="fadeIn"
+        >
           <NextLink href="/category/men" passHref legacyBehavior>
             <Link>
               <Button color={path === "men" ? "primary" : "info"}>Men</Button>
@@ -50,8 +68,36 @@ const Navbar = () => {
           </NextLink>
         </Box>
         <Box flex={1} />
+        {/* Pantallas pantallas grandes */}
+        {isSearchVisible ? (
+          <Input
+            type="text"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyUp={(e) => e.key === "Enter" && handleSearch()}
+            placeholder="Search..."
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={() => setIsSearchVisible(false)}>
+                  <ClearOutlined />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        ) : (
+          <IconButton
+            onClick={() => setIsSearchVisible(true)}
+            className="fadeIn"
+            sx={{ display: { xs: "none", sm: "flex" } }}
+          >
+            <SearchOutlined />
+          </IconButton>
+        )}
 
-        <IconButton>
+        {/* Pantallas pequeñas */}
+        <IconButton
+          sx={{ display: { xs: "flex", sm: "none" } }}
+          onClick={toggleSideMenu}
+        >
           <SearchOutlined />
         </IconButton>
 
