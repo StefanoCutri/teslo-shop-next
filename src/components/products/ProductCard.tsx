@@ -5,6 +5,7 @@ import {
   Card,
   CardActionArea,
   CardMedia,
+  Chip,
   Grid,
   Link,
   Typography,
@@ -41,6 +42,18 @@ const ProductCard = ({ product }: Props) => {
         >
           <Link>
             <CardActionArea onLoad={() => setIsImageLoaded(true)}>
+              {product.inStock === 0 && (
+                <Chip
+                  color="primary"
+                  label="No products available"
+                  sx={{
+                    position: "absolute",
+                    zIndex: 99,
+                    top: "10px",
+                    left: "10px",
+                  }}
+                />
+              )}
               <CardMedia
                 component="img"
                 className="fadeIn"
