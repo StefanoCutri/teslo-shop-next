@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
+import { useRouter } from "next/router";
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 
 import ShopLayout from "@/components/layouts/ShopLayout";
@@ -7,8 +8,9 @@ import ProductSlideShow from "@/components/products/ProductSlideShow";
 import ItemCounter from "@/components/ui/ItemCounter";
 import ProductSizeSelector from "@/components/products/ProductSizeSelector";
 
-import { ICartProduct, IProduct, ISize } from "@/interfaces";
 import { getAllProductsSlug, getProductBySlug } from "@/database";
+import { CartContext } from "@/context";
+import { ICartProduct, IProduct, ISize } from "@/interfaces";
 
 interface Props {
   product: IProduct;
@@ -26,6 +28,10 @@ const ProductPage = ({ product }: Props) => {
     quantity: 1,
   });
 
+  const { addCartToProduct } = useContext(CartContext);
+
+  const router = useRouter();
+
   const onSelectedSize = (size: ISize) => {
     setTempCartProduct((prod) => ({
       ...prod,
@@ -38,6 +44,12 @@ const ProductPage = ({ product }: Props) => {
       ...prod,
       quantity,
     }));
+  };
+
+  const addToCart = () => {
+    if (!tempCartProduct.size) return;
+    addCartToProduct(tempCartProduct);
+    // router.push('/cart');
   };
 
   return (
@@ -73,7 +85,11 @@ const ProductPage = ({ product }: Props) => {
 
             {/* Add to box */}
             {product.inStock > 0 ? (
-              <Button color="secondary" className="circular-btn">
+              <Button
+                color="secondary"
+                className="circular-btn"
+                onClick={addToCart}
+              >
                 {tempCartProduct.size ? "Add to cart" : "Select a size"}
               </Button>
             ) : (

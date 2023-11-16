@@ -1,6 +1,7 @@
 import CartList from "@/components/cart/CartList";
 import OrderSummary from "@/components/cart/OrderSummary";
 import ShopLayout from "@/components/layouts/ShopLayout";
+import { CartContext } from "@/context";
 import {
   Box,
   Button,
@@ -10,8 +11,14 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { useContext } from "react";
 
 const CartPage = () => {
+
+  const {cart} = useContext(CartContext)
+  console.log(cart);
+  
+
   return (
     <ShopLayout title="Cart" pageDescription="Shopping cart">
       <Typography variant="h1" component="h1">

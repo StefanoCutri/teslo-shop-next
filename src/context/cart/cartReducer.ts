@@ -1,10 +1,15 @@
 import { ICartProduct } from "@/interfaces";
 import { CartState } from "./";
 
-type CartActionType = {
-  type: "[Cart] - LoadCart from cookies | storage";
-  payload: ICartProduct[];
-};
+type CartActionType =
+  | {
+      type: "[Cart] - LoadCart from cookies | storage";
+      payload: ICartProduct[];
+    }
+  | {
+      type: "[Cart] - Add Product";
+      payload: ICartProduct[];
+    };
 
 export const cartReducer = (
   state: CartState,
@@ -15,6 +20,13 @@ export const cartReducer = (
       return {
         ...state,
       };
+
+    case "[Cart] - Add Product":
+      return {
+        ...state,
+        cart: [...action.payload]
+      }
+
 
     default:
       return state;
