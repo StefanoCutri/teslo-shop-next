@@ -33,6 +33,13 @@ const ProductPage = ({ product }: Props) => {
     }));
   };
 
+  const updateQuantity = (quantity: number) => {
+    setTempCartProduct((prod) => ({
+      ...prod,
+      quantity,
+    }));
+  };
+
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={3}>
@@ -52,7 +59,11 @@ const ProductPage = ({ product }: Props) => {
             {/* Amount */}
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Amount</Typography>
-              <ItemCounter />
+              <ItemCounter
+                currentValue={tempCartProduct.quantity}
+                maxValue={product.inStock > 10 ? 10 : product.inStock}
+                updateQuantity={updateQuantity}
+              />
               <ProductSizeSelector
                 selectedSize={tempCartProduct.size}
                 sizes={product.sizes}
