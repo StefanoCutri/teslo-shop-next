@@ -7,7 +7,8 @@ type CartActionType =
       payload: ICartProduct[];
     }
   | { type: "[Cart] - Add Product"; payload: ICartProduct[] }
-  | { type: "[Cart] - Update Cart Quantity"; payload: ICartProduct };
+  | { type: "[Cart] - Update Cart Quantity"; payload: ICartProduct }
+  | { type: "[Cart] - Remove Product From Cart"; payload: ICartProduct };
 
 export const cartReducer = (
   state: CartState,
@@ -37,6 +38,15 @@ export const cartReducer = (
         }),
       };
 
+    case "[Cart] - Remove Product From Cart":
+      return {
+        ...state,
+        cart: state.cart.filter(
+          (product) =>
+            product._id !== action.payload._id &&
+            product.size !== action.payload.size
+        ),
+      };
     default:
       return state;
   }

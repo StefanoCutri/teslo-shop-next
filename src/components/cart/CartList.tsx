@@ -18,7 +18,7 @@ interface Props {
 }
 
 const CartList = ({ editable = false }: Props) => {
-  const { cart, updateCartQuantity } = useContext(CartContext);
+  const { cart, updateCartQuantity, removeProductFromCart } = useContext(CartContext);
 
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => {
@@ -89,7 +89,7 @@ const CartList = ({ editable = false }: Props) => {
               <Typography variant="subtitle1">{`$${product.price}`}</Typography>
 
               {editable && (
-                <Button variant="text" color="secondary">
+                <Button variant="text" color="secondary" onClick={() => removeProductFromCart(product)}>
                   Remove
                 </Button>
               )}
