@@ -16,8 +16,6 @@ import { useContext } from "react";
 const CartPage = () => {
 
   const {cart} = useContext(CartContext)
-  console.log(cart);
-  
 
   return (
     <ShopLayout title="Cart" pageDescription="Shopping cart">

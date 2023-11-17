@@ -43,20 +43,24 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
   const addCartToProduct = (product: ICartProduct) => {
     const productInCart = state.cart.some((p) => p._id === product._id);
-    if (!productInCart)
+
+    if (!productInCart) {
       return dispatch({
         type: "[Cart] - Add Product",
         payload: [...state.cart, product],
       });
+    }
 
     const sameProductDifferentSizes = state.cart.some(
       (p) => p.size === product.size
     );
-    if (!sameProductDifferentSizes)
+
+    if (!sameProductDifferentSizes) {
       return dispatch({
         type: "[Cart] - Add Product",
         payload: [...state.cart, product],
       });
+    }
 
     const updatedProducts = state.cart.map((p) => {
       if (p._id != product._id) return p;
@@ -69,6 +73,10 @@ export const CartProvider: FC<Props> = ({ children }) => {
     dispatch({ type: "[Cart] - Add Product", payload: updatedProducts });
   };
 
+  const updateCartQuantity = (product: ICartProduct) => {
+    dispatch({ type: "[Cart] - Update Cart Quantity", payload: product });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -76,6 +84,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
         // Methods
         addCartToProduct,
+        updateCartQuantity,
       }}
     >
       {children}
