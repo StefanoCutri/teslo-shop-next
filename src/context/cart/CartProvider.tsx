@@ -17,7 +17,6 @@ interface Props {
 
 export const CartProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
-
   useEffect(() => {
     try {
       let cookieProducts = Cookie.get("cart")
@@ -37,6 +36,8 @@ export const CartProvider: FC<Props> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    if (state.cart.length === 0) return;
+
     Cookie.set("cart", JSON.stringify(state.cart));
   }, [state.cart]);
 

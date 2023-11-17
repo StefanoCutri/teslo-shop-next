@@ -7,31 +7,38 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { initialData } from "../../database/products";
 import NextLink from "next/link";
 import ItemCounter from "../ui/ItemCounter";
-
-const productsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "@/context";
 
 interface Props {
   editable?: boolean;
 }
 
 const CartList = ({ editable = false }: Props) => {
+  const { cart } = useContext(CartContext);
+
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   return (
     <>
-      {productsInCart.map((product) => (
-        <Grid container spacing={2} key={product.slug} sx={{ mb: 1 }}>
+      {hasMounted && cart.map((product) => (
+        <Grid
+          container
+          spacing={2}
+          key={product.slug + product.size}
+          sx={{ mb: 1 }}
+        >
           <Grid item xs={3}>
-            <NextLink href="/product/slug" passHref legacyBehavior>
+            <NextLink href={`/product/${product.slug}`} passHref legacyBehavior>
               <Link>
                 <CardActionArea>
                   <CardMedia
-                    image={`/products/${product.images[0]}`}
+                    image={`/products/${product.image}`}
                     component="img"
                     sx={{ borderRadius: "5px" }}
                   />
@@ -43,14 +50,21 @@ const CartList = ({ editable = false }: Props) => {
             <Box display="flex" flexDirection="column">
               <Typography variant="body1">{product.title}</Typography>
               <Typography variant="body1">
-                Size: <strong>{product.sizes[0]}</strong>
+                Size: <strong>{product.size}</strong>
               </Typography>
 
               {/* Conditionally */}
               {editable ? (
-                <ItemCounter />
+                <ItemCounter
+                  currentValue={product.quantity}
+                  maxValue={10}
+                  updateQuantity={() => {}}
+                />
               ) : (
-                <Typography variant="body1">3</Typography>
+                <Typography variant="body1">
+                  {product.quantity}
+                  {product.quantity > 1 ? "products" : "product"}
+                </Typography>
               )}
             </Box>
           </Grid>
