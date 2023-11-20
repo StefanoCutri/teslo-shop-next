@@ -17,6 +17,7 @@ interface Props {
 
 export const CartProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
+
   useEffect(() => {
     try {
       let cookieProducts = Cookie.get("cart")
@@ -37,8 +38,27 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (state.cart.length === 0) return;
-
     Cookie.set("cart", JSON.stringify(state.cart));
+  }, [state.cart]);
+
+  useEffect(() => {
+    let numberOfItems = 0;
+    let subTotal = 0;
+    const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
+
+    state.cart.forEach((product) => {
+      numberOfItems += product.quantity;
+      subTotal += product.price * product.quantity;
+    });
+
+    const orderSummary = {
+      numberOfItems,
+      subTotal,
+      tax: subTotal * taxRate,
+      total: subTotal * (taxRate + 1)
+    };
+
+    console.log(orderSummary);
   }, [state.cart]);
 
   const addCartToProduct = (product: ICartProduct) => {
@@ -78,8 +98,8 @@ export const CartProvider: FC<Props> = ({ children }) => {
   };
 
   const removeProductFromCart = (product: ICartProduct) => {
-    dispatch({type: '[Cart] - Remove Product From Cart', payload: product})
-  }
+    dispatch({ type: "[Cart] - Remove Product From Cart", payload: product });
+  };
 
   return (
     <CartContext.Provider
@@ -89,7 +109,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
         // Methods
         addCartToProduct,
         updateCartQuantity,
-        removeProductFromCart
+        removeProductFromCart,
       }}
     >
       {children}

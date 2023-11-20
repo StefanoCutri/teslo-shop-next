@@ -74,7 +74,7 @@ const CartList = ({ editable = false }: Props) => {
                 ) : (
                   <Typography variant="body1">
                     {product.quantity}
-                    {product.quantity > 1 ? "products" : "product"}
+                    {product.quantity > 1 ? " products" : " product"}
                   </Typography>
                 )}
               </Box>
