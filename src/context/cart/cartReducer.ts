@@ -42,9 +42,7 @@ export const cartReducer = (
       return {
         ...state,
         cart: state.cart.filter(
-          (product) =>
-            product._id !== action.payload._id &&
-            product.size !== action.payload.size
+          (product) => !(product._id === action.payload._id && product.size === action.payload.size)
         ),
       };
     default:
