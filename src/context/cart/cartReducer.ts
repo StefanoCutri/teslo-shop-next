@@ -8,7 +8,14 @@ type CartActionType =
     }
   | { type: "[Cart] - Add Product"; payload: ICartProduct[] }
   | { type: "[Cart] - Update Cart Quantity"; payload: ICartProduct }
-  | { type: "[Cart] - Remove Product From Cart"; payload: ICartProduct };
+  | { type: "[Cart] - Remove Product From Cart"; payload: ICartProduct }
+  | { type: "[Cart] - Update Cart Summary"; payload: {
+        numberOfItems: number;
+        subTotal: number;
+        tax: number;
+        total: number;
+      };
+    };
 
 export const cartReducer = (
   state: CartState,
@@ -42,9 +49,21 @@ export const cartReducer = (
       return {
         ...state,
         cart: state.cart.filter(
-          (product) => !(product._id === action.payload._id && product.size === action.payload.size)
+          (product) =>
+            !(
+              product._id === action.payload._id &&
+              product.size === action.payload.size
+            )
         ),
       };
+
+      case '[Cart] - Update Cart Summary':
+        console.log('updated')
+        
+        return {
+          ...state,
+          ...action.payload
+        }
     default:
       return state;
   }

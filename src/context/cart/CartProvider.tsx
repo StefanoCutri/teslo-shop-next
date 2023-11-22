@@ -5,10 +5,18 @@ import { ICartProduct } from "@/interfaces";
 
 export interface CartState {
   cart: ICartProduct[];
+  numberOfItems: number;
+  subTotal: number;
+  tax: number;
+  total: number;
 }
 
 export const CART_INITIAL_STATE: CartState = {
   cart: Cookie.get("cart") ? JSON.parse(Cookie.get("cart")!) : [],
+  numberOfItems: 0,
+  subTotal: 0,
+  tax: 0,
+  total: 0,
 };
 
 interface Props {
@@ -42,23 +50,33 @@ export const CartProvider: FC<Props> = ({ children }) => {
   }, [state.cart]);
 
   useEffect(() => {
-    let numberOfItems = 0;
-    let subTotal = 0;
+    // let numberOfItems = 0;
+    // let subTotal = 0;
+    // const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
+
+    // state.cart.forEach((product) => {
+    //   numberOfItems += product.quantity;
+    //   subTotal += product.price * product.quantity;
+    // });
+
+    const numberOfItems = state.cart.reduce(
+      (prev, current) => current.quantity + prev,
+      0
+    );
+    const subTotal = state.cart.reduce(
+      (prev, current) => current.price * current.quantity + prev,
+      0
+    );
     const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
-
-    state.cart.forEach((product) => {
-      numberOfItems += product.quantity;
-      subTotal += product.price * product.quantity;
-    });
-
     const orderSummary = {
       numberOfItems,
       subTotal,
       tax: subTotal * taxRate,
-      total: subTotal * (taxRate + 1)
+      total: subTotal * (taxRate + 1),
     };
-
     console.log(orderSummary);
+
+    dispatch({ type: "[Cart] - Update Cart Summary", payload: orderSummary });
   }, [state.cart]);
 
   const addCartToProduct = (product: ICartProduct) => {
