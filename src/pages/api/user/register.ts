@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/database";
 import { User } from "@/models";
 import bcrypt from "bcryptjs";
-import { signJwt } from "@/utils";
+import { isValidEmail, signJwt } from "@/utils";
 
 type Data =
   | {
@@ -43,6 +43,12 @@ const registerUser = async (
   if (password.length < 6) {
     return res.status(400).json({
       message: "Password should be at least 6 characters long",
+    });
+  }
+
+  if (!isValidEmail(email)) {
+    return res.status(400).json({
+      message: "The email is not valid",
     });
   }
 
