@@ -58,7 +58,6 @@ export const cartReducer = (
       };
 
       case '[Cart] - Update Cart Summary':
-        console.log('updated')
         
         return {
           ...state,
