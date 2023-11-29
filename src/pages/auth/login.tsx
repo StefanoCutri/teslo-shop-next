@@ -34,6 +34,7 @@ const LoginPage = () => {
     setIsButtonDisabled(true);
     try {
       const { data } = await tesloApi.post("/user/login", { email, password });
+      setIsButtonDisabled(false)
     } catch (error) {
       console.log("Credentials not valid");
       setShowError(true);
