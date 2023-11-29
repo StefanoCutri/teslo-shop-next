@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { useForm } from "react-hook-form";
 import {
@@ -15,6 +16,7 @@ import tesloApi from "@/api/tesloApi";
 import { AuthLayout } from "@/components/layouts";
 import { isEmail } from "@/utils";
 import { ErrorOutline } from "@mui/icons-material";
+import { AuthContext } from "@/context";
 
 type FormData = {
   email: string;
@@ -25,36 +27,40 @@ type FormData = {
 const RegisterPage = () => {
   const [showError, setShowError] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const router = useRouter();
+  const { registerUser } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const registerUser = async ({ email, password, name }: FormData) => {
+  const onRegisterUser = async ({ email, password, name }: FormData) => {
     setShowError(false);
     setIsButtonDisabled(true);
-    try {
-      const { data } = await tesloApi.post("/user/register", {
-        email,
-        name,
-        password,
-      });
-      console.log(data);
-      setIsButtonDisabled(false);
-    } catch (error) {
-      console.log("Credentials not valid");
+
+    const { hasError, message } = await registerUser(email, name, password);
+
+    if (hasError) {
       setShowError(true);
+      setErrorMessage(message!);
       setTimeout(() => {
         setShowError(false);
         setIsButtonDisabled(false);
       }, 3000);
+
+      return;
     }
+
+    router.replace("/");
   };
 
   return (
     <AuthLayout title="Login">
-      <form onSubmit={handleSubmit(registerUser)}>
+      <form onSubmit={handleSubmit(onRegisterUser)}>
         <Box sx={{ width: 350, padding: "10px 20px" }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
