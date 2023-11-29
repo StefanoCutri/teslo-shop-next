@@ -1,3 +1,4 @@
+import tesloApi from "@/api/tesloApi";
 import { AuthLayout } from "@/components/layouts";
 import { isEmail } from "@/utils";
 import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
@@ -17,8 +18,15 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const loginUser = (data: any) => {
-    console.log({ data });
+  const loginUser = async ({ email, password }: FormData) => {
+    console.log('login');
+    
+    try {
+      const { data } = await tesloApi.post("/user/login", { email, password });
+      console.log({ data });
+    } catch (error) {
+      console.log("Credentials not valid");
+    }
   };
 
   return (
