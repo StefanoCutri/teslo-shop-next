@@ -1,8 +1,18 @@
 import tesloApi from "@/api/tesloApi";
 import { AuthLayout } from "@/components/layouts";
 import { isEmail } from "@/utils";
-import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import { ErrorOutline } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Chip,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import NextLink from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -11,21 +21,26 @@ type FormData = {
 };
 
 const LoginPage = () => {
+  const [showError, setShowError] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormData>();
 
   const loginUser = async ({ email, password }: FormData) => {
-    console.log('login');
-    
+    setShowError(false);
+    setIsButtonDisabled(true);
     try {
       const { data } = await tesloApi.post("/user/login", { email, password });
-      console.log({ data });
     } catch (error) {
       console.log("Credentials not valid");
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+        setIsButtonDisabled(false);
+      }, 3000);
     }
   };
 
@@ -67,12 +82,22 @@ const LoginPage = () => {
               />
             </Grid>
             <Grid item xs={12}>
+              <Chip
+                label="No user with that credentials"
+                color="error"
+                icon={<ErrorOutline />}
+                className="fade-in"
+                sx={{ display: showError ? "flex" : "none" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
               <Button
                 color="secondary"
                 className="circular-btn"
                 size="large"
                 fullWidth
                 type="submit"
+                disabled={isButtonDisabled}
               >
                 Log in
               </Button>
