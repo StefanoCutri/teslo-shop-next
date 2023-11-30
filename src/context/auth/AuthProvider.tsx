@@ -28,12 +28,13 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   }, []);
 
   const checkToken = async () => {
+    if (!Cookies.get("token")) return;
+    
     try {
       const { data } = await tesloApi.get("/user/validate-token");
       const { token, user } = data;
       Cookies.set("token", token);
       dispatch({ type: "[Auth] - Log in", payload: user });
-      
     } catch (error) {
       Cookies.remove("token");
     }
