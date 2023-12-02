@@ -30,7 +30,7 @@ const SideMenu = () => {
   const { toggleSideMenu, isMenuOpen } = useContext(UiContext);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, user, logout } = useContext(AuthContext);
 
   const handleSearch = () => {
     if (searchTerm.trim().length === 0) return;
@@ -83,7 +83,7 @@ const SideMenu = () => {
                 <ListItemText primary={"My orders"} />
               </ListItem>
 
-              <ListItem button>
+              <ListItem button onClick={logout}>
                 <ListItemIcon>
                   <LoginOutlined />
                 </ListItemIcon>
