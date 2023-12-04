@@ -24,7 +24,7 @@ import { VpnKeyOutlined } from "@mui/icons-material";
 
 import { AuthContext, UiContext } from "@/context";
 import { useContext, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const SideMenu = () => {
   const { toggleSideMenu, isMenuOpen } = useContext(UiContext);
@@ -37,7 +37,7 @@ const SideMenu = () => {
     navigateTo(`/search/${searchTerm.toLowerCase()}`);
   };
 
-  const { push } = useRouter();
+  const { push, asPath } = useRouter();
   const navigateTo = (url: string) => {
     toggleSideMenu();
     push(url);
@@ -91,7 +91,7 @@ const SideMenu = () => {
               </ListItem>
             </>
           ) : (
-            <ListItem button>
+            <ListItem button onClick={() => navigateTo(`/auth/login?p=${asPath}`)}>
               <ListItemIcon>
                 <VpnKeyOutlined />
               </ListItemIcon>
