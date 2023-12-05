@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useReducer } from "react";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { CartContext, cartReducer } from "./";
 import { ICartProduct } from "@/interfaces";
 
@@ -10,17 +10,28 @@ export interface CartState {
   subTotal: number;
   tax: number;
   total: number;
+  shippingAddress?: ShippingAdress;
 }
 
+export interface ShippingAdress {
+  firstName: string;
+  secondName: string;
+  address1: string;
+  address2?: string;
+  zipCode: string;
+  city: string;
+  country: string;
+  phone: string;
+}
 export const CART_INITIAL_STATE: CartState = {
   isLoaded: false,
-  cart: Cookie.get("cart") ? JSON.parse(Cookie.get("cart")!) : [],
+  cart: Cookies.get("cart") ? JSON.parse(Cookies.get("cart")!) : [],
   numberOfItems: 0,
   subTotal: 0,
   tax: 0,
   total: 0,
+  shippingAddress: undefined,
 };
-
 interface Props {
   children?: React.ReactNode | undefined;
 }
@@ -30,8 +41,8 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     try {
-      let cookieProducts = Cookie.get("cart")
-        ? JSON.parse(Cookie.get("cart")!)
+      let cookieProducts = Cookies.get("cart")
+        ? JSON.parse(Cookies.get("cart")!)
         : [];
 
       dispatch({
@@ -48,8 +59,29 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (state.cart.length === 0) return;
-    Cookie.set("cart", JSON.stringify(state.cart));
+    Cookies.set("cart", JSON.stringify(state.cart));
   }, [state.cart]);
+
+  useEffect(() => {
+
+    if (Cookies.get("firstName")) {
+      const shippingAddress = {
+        firstName: Cookies.get("firstName") || "",
+        secondName: Cookies.get("secondName") || "",
+        address1: Cookies.get("address1") || "",
+        address2: Cookies.get("address2") || "",
+        zipCode: Cookies.get("zipCode") || "",
+        city: Cookies.get("city") || "",
+        country: Cookies.get("country") || "",
+        phone: Cookies.get("phone") || "",
+      };
+
+      dispatch({
+        type: "[Cart] - Load Address from cookies",
+        payload: shippingAddress,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     // let numberOfItems = 0;
