@@ -63,7 +63,6 @@ export const CartProvider: FC<Props> = ({ children }) => {
   }, [state.cart]);
 
   useEffect(() => {
-
     if (Cookies.get("firstName")) {
       const shippingAddress = {
         firstName: Cookies.get("firstName") || "",
@@ -152,6 +151,10 @@ export const CartProvider: FC<Props> = ({ children }) => {
     dispatch({ type: "[Cart] - Remove Product From Cart", payload: product });
   };
 
+  const updateAddress = (data: ShippingAdress) => {
+    dispatch({ type: "[Cart] - Update Address", payload: data });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -161,6 +164,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
         addCartToProduct,
         updateCartQuantity,
         removeProductFromCart,
+        updateAddress
       }}
     >
       {children}

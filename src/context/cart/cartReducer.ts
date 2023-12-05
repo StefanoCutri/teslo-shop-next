@@ -17,6 +17,7 @@ type CartActionType =
       };
     }
   | {type: "[Cart] - Load Address from cookies", payload: ShippingAdress }
+  | {type: "[Cart] - Update Address", payload: ShippingAdress }
 
 
 export const cartReducer = (
@@ -67,6 +68,7 @@ export const cartReducer = (
           ...action.payload
         }
 
+      case '[Cart] - Update Address':
       case '[Cart] - Load Address from cookies':
         return {
           ...state,

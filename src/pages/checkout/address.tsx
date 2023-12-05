@@ -13,7 +13,8 @@ import Cookies from "js-cookie";
 
 import ShopLayout from "@/components/layouts/ShopLayout";
 import { countries } from "../../utils/countries";
-
+import { useContext } from "react";
+import { CartContext } from "@/context";
 
 type FormData = {
   firstName: string;
@@ -26,37 +27,33 @@ type FormData = {
   phone: string;
 };
 
-const getAdressFromCookies = () : FormData => {
-  return{
-    firstName: Cookies.get("firstName") || '',
-    secondName: Cookies.get("secondName") || '',
-    address1: Cookies.get("address1") || '',
-    address2: Cookies.get("address2") || '',
-    zipCode: Cookies.get("zipCode") || '',
-    city: Cookies.get("city") || '',
-    country: Cookies.get("country") || '',
-    phone: Cookies.get("phone") || '',
-  }
-}
+const getAdressFromCookies = (): FormData => {
+  return {
+    firstName: Cookies.get("firstName") || "",
+    secondName: Cookies.get("secondName") || "",
+    address1: Cookies.get("address1") || "",
+    address2: Cookies.get("address2") || "",
+    zipCode: Cookies.get("zipCode") || "",
+    city: Cookies.get("city") || "",
+    country: Cookies.get("country") || "",
+    phone: Cookies.get("phone") || "",
+  };
+};
 
 const AddressPage = () => {
   const router = useRouter();
-  const { register,handleSubmit,formState: { errors },} = useForm<FormData>({
+  const { updateAddress } = useContext(CartContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: getAdressFromCookies(),
   });
 
   const onOrderSent = async (data: FormData) => {
-    console.log("sent");
-    Cookies.set("firstName", data.firstName);
-    Cookies.set("secondName", data.secondName);
-    Cookies.set("address1", data.address1);
-    Cookies.set("address2", data.address2);
-    Cookies.set("zipCode", data.zipCode);
-    Cookies.set("city", data.city);
-    Cookies.set("country", data.country);
-    Cookies.set("phone", data.phone);
-
-    router.replace('/checkout/summary')
+    updateAddress(data);
+    router.replace("/checkout/summary");
   };
 
   return (
