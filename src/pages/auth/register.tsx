@@ -114,7 +114,7 @@ const RegisterPage = () => {
             </Grid>
             <Grid item xs={12}>
               <Chip
-                label="No user with that credentials"
+                label="Something went wrong, try again"
                 color="error"
                 icon={<ErrorOutline />}
                 className="fade-in"
