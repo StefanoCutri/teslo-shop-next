@@ -42,6 +42,7 @@ const getAdressFromCookies = (): FormData => {
 
 const AddressPage = () => {
   const router = useRouter();
+  console.log(getAdressFromCookies());
   const { updateAddress } = useContext(CartContext);
   const {
     register,
@@ -146,7 +147,11 @@ const AddressPage = () => {
                   select
                   variant="filled"
                   label="Country"
-                  defaultValue={countries[0].code}
+                  defaultValue={
+                    Cookies.get("country")
+                      ? Cookies.get("country")
+                      : countries[0].code
+                  }
                   {...register("country", {
                     required: "This field is required",
                   })}

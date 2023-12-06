@@ -151,8 +151,16 @@ export const CartProvider: FC<Props> = ({ children }) => {
     dispatch({ type: "[Cart] - Remove Product From Cart", payload: product });
   };
 
-  const updateAddress = (data: ShippingAdress) => {
-    dispatch({ type: "[Cart] - Update Address", payload: data });
+  const updateAddress = (address: ShippingAdress) => {
+    Cookies.set("firstName", address.firstName);
+    Cookies.set("secondName", address.secondName);
+    Cookies.set("address1", address.address1);
+    Cookies.set("address2", address.address2 || "");
+    Cookies.set("zipCode", address.zipCode);
+    Cookies.set("city", address.city);
+    Cookies.set("country", address.country);
+    Cookies.set("phone", address.phone);
+    dispatch({ type: "[Cart] - Update Address", payload: address });
   };
 
   return (
@@ -164,7 +172,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
         addCartToProduct,
         updateCartQuantity,
         removeProductFromCart,
-        updateAddress
+        updateAddress,
       }}
     >
       {children}
