@@ -1,9 +1,15 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
+import { checkUser } from "@/database";
+
+interface User {
+  name: string;
+  role: string;
+  _id: string;
+}
 
 export const authOptions: NextAuthOptions = {
-  // Configure one or more authentication providers
   providers: [
     Credentials({
       name: "Custom loging",
@@ -19,10 +25,20 @@ export const authOptions: NextAuthOptions = {
           placeholder: "Enter your password",
         },
       },
-      async authorize(credentials) {
-        console.log(credentials);
+      authorize: async (credentials) => {
+        if (!credentials) {
+          return null;
+        }
 
-        return null;
+        const { email, password } = credentials;
+
+        try {
+          const user = await checkUser(email, password);
+          return user;
+        } catch (error) {
+          console.error("Error during authorization:", error);
+          return null;
+        }
       },
     }),
     GithubProvider({
