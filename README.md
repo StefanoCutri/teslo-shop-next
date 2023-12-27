@@ -20,7 +20,7 @@ Rename **.env.template** to **.env**
 
 # Fill database with test information
 
-Call:
+Call locally:
 
 ```
 http://localhost:3000/api/seed
