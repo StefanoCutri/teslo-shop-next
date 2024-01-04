@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-import { checkUser } from "@/database";
+import {checkUser} from '../../../database'
 
 interface User {
   name: string;

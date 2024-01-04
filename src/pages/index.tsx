@@ -1,9 +1,11 @@
 import { Typography } from "@mui/material";
 
-import ShopLayout from "@/components/layouts/ShopLayout";
-import ProductList from "@/components/products/ProductList";
-import { useProducts } from "@/hooks";
-import FullScreenLoading from "@/components/ui/FullScreenLoading";
+import {ShopLayout} from '../components/layouts'
+import {ProductList} from '../components/products'
+
+import {useProducts} from '../hooks'
+
+import FullScreenLoading from '../components/ui/FullScreenLoading'
 
 export default function Home() {
   const { products, isLoading } = useProducts("/products");

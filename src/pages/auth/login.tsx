@@ -13,9 +13,9 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import { AuthLayout } from "@/components/layouts";
-import { AuthContext } from "@/context";
-import { isEmail } from "@/utils";
+import {AuthLayout} from '../../components/layouts'
+import {AuthContext} from '../../context'
+import {isEmail} from '../../utils'
 
 type FormData = {
   email: string;
@@ -123,7 +123,7 @@ const LoginPage = () => {
                     : "/auth/register"
                 }
                 passHref
-                legacyBehavior
+                
               >
                 <Link underline="always">Don't have an account?</Link>
               </NextLink>

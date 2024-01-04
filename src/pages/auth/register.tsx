@@ -12,11 +12,11 @@ import {
   Typography,
 } from "@mui/material";
 
-import tesloApi from "@/api/tesloApi";
-import { AuthLayout } from "@/components/layouts";
-import { isEmail } from "@/utils";
 import { ErrorOutline } from "@mui/icons-material";
-import { AuthContext } from "@/context";
+
+import {AuthLayout} from '../../components/layouts'
+import {AuthContext} from '../../context'
+import {isEmail} from '../../utils'
 
 type FormData = {
   email: string;

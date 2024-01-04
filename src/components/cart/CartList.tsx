@@ -10,8 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import ItemCounter from "../ui/ItemCounter";
-import { CartContext } from "@/context";
-import { ICartProduct } from "@/interfaces";
+import { CartContext } from "../../context";
+import { ICartProduct } from "../../interfaces";
 
 interface Props {
   editable?: boolean;
@@ -44,7 +44,6 @@ const CartList = ({ editable = false }: Props) => {
               <NextLink
                 href={`/product/${product.slug}`}
                 passHref
-                legacyBehavior
               >
                 <Link>
                   <CardActionArea>

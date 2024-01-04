@@ -18,7 +18,7 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
-import { CartContext, UiContext } from "@/context";
+import {CartContext, UiContext} from '../../context';
 
 const Navbar = () => {
   const { pathname, push } = useRouter();
@@ -37,7 +37,7 @@ const Navbar = () => {
   return (
     <AppBar>
       <Toolbar>
-        <NextLink href="/" passHref legacyBehavior>
+        <NextLink href="/" passHref >
           <Link display="flex" alignItems="center">
             <Typography variant="h6">Teslo |</Typography>
             <Typography sx={{ ml: 0.5 }}> Shop</Typography>
@@ -50,19 +50,19 @@ const Navbar = () => {
           }}
           className="fadeIn"
         >
-          <NextLink href="/category/men" passHref legacyBehavior>
+          <NextLink href="/category/men" passHref >
             <Link>
               <Button color={path === "men" ? "primary" : "info"}>Men</Button>
             </Link>
           </NextLink>
-          <NextLink href="/category/women" passHref legacyBehavior>
+          <NextLink href="/category/women" passHref >
             <Link>
               <Button color={path === "women" ? "primary" : "info"}>
                 Women
               </Button>
             </Link>
           </NextLink>
-          <NextLink href="/category/kid" passHref legacyBehavior>
+          <NextLink href="/category/kid" passHref >
             <Link>
               <Button color={path === "kid" ? "primary" : "info"}>Kids</Button>
             </Link>
@@ -102,7 +102,7 @@ const Navbar = () => {
           <SearchOutlined />
         </IconButton>
 
-        <NextLink href="/cart" passHref legacyBehavior>
+        <NextLink href="/cart" passHref >
           <Link>
             <IconButton>
               <Badge

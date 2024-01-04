@@ -11,10 +11,10 @@ import {
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-import ShopLayout from "@/components/layouts/ShopLayout";
+import {ShopLayout} from "../../components/layouts";
 import { countries } from "../../utils/countries";
 import { useContext } from "react";
-import { CartContext } from "@/context";
+import { CartContext } from "../../context";
 
 type FormData = {
   firstName: string;

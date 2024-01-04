@@ -1,8 +1,8 @@
-import CartList from "@/components/cart/CartList";
-import OrderSummary from "@/components/cart/OrderSummary";
-import ShopLayout from "@/components/layouts/ShopLayout";
-import { CartContext } from "@/context";
-import { countries } from "@/utils";
+import CartList from "../../components/cart/CartList";
+import OrderSummary from "../../components/cart/OrderSummary";
+import {ShopLayout} from "../../components/layouts";
+import { CartContext } from "../../context";
+import { countries } from "../../utils";
 import {
   Box,
   Button,
@@ -58,7 +58,7 @@ const SummaryPage = () => {
               <Divider sx={{ my: 1 }} />
 
               <Box display="flex" justifyContent="end">
-                <NextLink href="/checkout/address" passHref legacyBehavior>
+                <NextLink href="/checkout/address" passHref>
                   <Link underline="always">Edit</Link>
                 </NextLink>
               </Box>
@@ -84,7 +84,7 @@ const SummaryPage = () => {
               {/* Order Summary */}
 
               <Box display="flex" justifyContent="end">
-                <NextLink href="/cart" passHref legacyBehavior>
+                <NextLink href="/cart" passHref>
                   <Link underline="always">Edit</Link>
                 </NextLink>
               </Box>

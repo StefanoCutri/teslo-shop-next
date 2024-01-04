@@ -1,3 +1,5 @@
+import { useContext, useState } from "react";
+import { useRouter } from "next/router";
 import {
   Box,
   Divider,
@@ -22,9 +24,7 @@ import { MaleOutlined } from "@mui/icons-material";
 import { SearchOutlined } from "@mui/icons-material";
 import { VpnKeyOutlined } from "@mui/icons-material";
 
-import { AuthContext, UiContext } from "@/context";
-import { useContext, useState } from "react";
-import { useRouter } from "next/router";
+import {CartContext, UiContext, AuthContext} from '../../context';
 
 const SideMenu = () => {
   const { toggleSideMenu, isMenuOpen } = useContext(UiContext);

@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import CartList from "@/components/cart/CartList";
-import OrderSummary from "@/components/cart/OrderSummary";
-import ShopLayout from "@/components/layouts/ShopLayout";
-import { CartContext } from "@/context";
+import CartList from "../../components/cart/CartList";
+import OrderSummary from "../../components/cart/OrderSummary";
+import {ShopLayout} from "../../components/layouts";
+import { CartContext } from "../../context";
 import {
   Box,
   Button,

@@ -1,4 +1,4 @@
-import { User } from "@/models";
+import { User } from "../models";
 import { db } from ".";
 import bcrypt from "bcryptjs";
 

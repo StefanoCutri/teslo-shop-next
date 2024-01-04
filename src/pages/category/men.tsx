@@ -1,7 +1,7 @@
-import ShopLayout from "@/components/layouts/ShopLayout";
-import ProductList from "@/components/products/ProductList";
-import FullScreenLoading from "@/components/ui/FullScreenLoading";
-import { useProducts } from "@/hooks";
+import {ProductList} from '../../components/products';
+import {ShopLayout} from '../../components/layouts'
+import FullScreenLoading from '../../components/ui/FullScreenLoading'
+import {useProducts} from '../../hooks'
 import { Typography } from "@mui/material";
 import React from "react";
 

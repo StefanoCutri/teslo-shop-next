@@ -1,7 +1,8 @@
-import { CartContext } from "@/context";
-import { format } from "@/utils";
-import { Grid, Typography } from "@mui/material";
 import { useContext } from "react";
+import { Grid, Typography } from "@mui/material";
+
+import { CartContext } from "../../context";
+import { format } from "../../utils";
 
 const OrderSummary = () => {
   const { numberOfItems, subTotal, tax, total } = useContext(CartContext);

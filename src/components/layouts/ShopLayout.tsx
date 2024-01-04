@@ -9,7 +9,7 @@ interface Props {
   children?: JSX.Element | JSX.Element[];
 }
 
-const ShopLayout = ({
+export const ShopLayout = ({
   title,
   pageDescription,
   imageFullUrl,
@@ -47,4 +47,3 @@ const ShopLayout = ({
   );
 };
 
-export default ShopLayout;

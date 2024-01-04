@@ -1,12 +1,13 @@
-import "@/styles/globals.css";
+// import "@/styles/globals.css";
 
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react"
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { SWRConfig } from "swr";
 
-import { lightTheme } from "@/themes";
-import { AuthProvider, CartProvider, UiProvider } from "@/context";
+import {AuthProvider, UiProvider, CartProvider} from '../context';
+import {lightTheme} from '../themes'
+
 
 export default function App({ Component, pageProps:  { session, ...pageProps } }: AppProps) {
   return (

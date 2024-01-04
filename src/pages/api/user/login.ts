@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "@/database";
-import { User } from "@/models";
+import {db} from '../../../database'
+import {User} from '../../../models'
 import bcrypt from "bcryptjs";
-import { signJwt } from "@/utils";
+import {signJwt} from '../../../utils'
 
 type Data =
   | {

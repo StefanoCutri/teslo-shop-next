@@ -3,14 +3,14 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 
-import ShopLayout from "@/components/layouts/ShopLayout";
-import ProductSlideShow from "@/components/products/ProductSlideShow";
-import ItemCounter from "@/components/ui/ItemCounter";
-import ProductSizeSelector from "@/components/products/ProductSizeSelector";
+import {ShopLayout} from '../../components/layouts'
+import ProductSlideShow from '../../components/products/ProductSlideShow'
+import ItemCounter from '../../components/ui/ItemCounter'
+import ProductSizeSelector from "../../components/products/ProductSizeSelector";
 
-import { getAllProductsSlug, getProductBySlug } from "@/database";
-import { CartContext } from "@/context";
-import { ICartProduct, IProduct, ISize } from "@/interfaces";
+import { getAllProductsSlug, getProductBySlug } from "../../database";
+import { CartContext } from "../../context";
+import { ICartProduct, IProduct, ISize } from "../../interfaces";
 
 interface Props {
   product: IProduct;
