@@ -1,5 +1,7 @@
 # Next.js Teslo-Shop
 
+## This is an ecommerce built with Next.js and React
+
 To run locally, you need the data base
 
 ```
